@@ -21,7 +21,9 @@ class Game {
 
     this.addFloor();
     this.addJunk();
-    this.addHero();
+    this.hero = this.addHero();
+
+    this.keyboard();
 
     window.addEventListener('resize', this.setGameDimensions.bind(this), false);
   }
@@ -47,9 +49,28 @@ class Game {
   }
 
   addHero() {
-    const hero = new Hero();
+    let hero = new Hero();
 
     world.add(engine.world, [hero.body]);
+
+    return hero;
+  }
+
+  keyboard() {
+    this.keys = {};
+    document.body.addEventListener('keyup', e => {
+      delete this.keys[e.keyCode];
+    });
+    document.body.addEventListener('keydown', e => {
+      this.keys[e.keyCode] = true;
+    });
+  }
+
+  update() {
+    //console.log(this.keys);
+    this.hero.update({
+      keys: this.keys
+    });
   }
 
   setGameDimensions() {
@@ -63,3 +84,10 @@ class Game {
 }
 
 let game = new Game();
+
+const loop = () => {
+  game.update();
+  requestAnimationFrame(loop);
+};
+
+requestAnimationFrame(loop);

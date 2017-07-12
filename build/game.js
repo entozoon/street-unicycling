@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -12,9 +12,22 @@ var Hero = function () {
   }
 
   _createClass(Hero, [{
-    key: "getBody",
+    key: 'getBody',
     value: function getBody() {
       return this.body;
+    }
+  }, {
+    key: 'movement',
+    value: function movement() {
+      if (this.keys[38]) {
+        console.log('forward');
+      }
+    }
+  }, {
+    key: 'update',
+    value: function update(input) {
+      this.keys = input.keys;
+      this.movement();
     }
   }]);
 
@@ -51,7 +64,9 @@ var Game = function () {
 
     this.addFloor();
     this.addJunk();
-    this.addHero();
+    this.hero = this.addHero();
+
+    this.keyboard();
 
     window.addEventListener('resize', this.setGameDimensions.bind(this), false);
   }
@@ -84,6 +99,29 @@ var Game = function () {
       var hero = new Hero();
 
       world.add(engine.world, [hero.body]);
+
+      return hero;
+    }
+  }, {
+    key: 'keyboard',
+    value: function keyboard() {
+      var _this = this;
+
+      this.keys = {};
+      document.body.addEventListener('keyup', function (e) {
+        delete _this.keys[e.keyCode];
+      });
+      document.body.addEventListener('keydown', function (e) {
+        _this.keys[e.keyCode] = true;
+      });
+    }
+  }, {
+    key: 'update',
+    value: function update() {
+      //console.log(this.keys);
+      this.hero.update({
+        keys: this.keys
+      });
     }
   }, {
     key: 'setGameDimensions',
@@ -98,3 +136,10 @@ var Game = function () {
 }();
 
 var game = new Game();
+
+var loop = function loop() {
+  game.update();
+  requestAnimationFrame(loop);
+};
+
+requestAnimationFrame(loop);
