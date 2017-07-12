@@ -6,6 +6,8 @@
     </head>
 
     <body>
-        <canvas id="game" width="400" height="200"></canvas>
+        <!-- Being super lazy and avoiding a webpack style build with imports/require.js -->
+        <script src="node_modules/matter-js/build/matter.js"></script>
+        <script crossorigin="anonymous" src="build/app.js"></script>
     </body>
 </html>
