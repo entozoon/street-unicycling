@@ -19,8 +19,6 @@ var Game = function () {
     this.bodies = props.matter.Bodies;
     this.canvas = document.querySelector('canvas');
 
-    this.doStuff();
-
     // Run engine
     this.engineClass.run(this.engine);
 
@@ -28,6 +26,8 @@ var Game = function () {
     this.renderClass.run(this.render);
 
     this.setGameDimensions();
+
+    this.doStuff();
 
     window.addEventListener('resize', this.setGameDimensions.bind(this), false);
   }
@@ -37,7 +37,12 @@ var Game = function () {
     value: function doStuff() {
       var boxA = this.bodies.rectangle(400, 200, 80, 80);
       var boxB = this.bodies.rectangle(450, 50, 100, 100);
-      var ground = this.bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+      var width = this.canvas.width,
+          height = 10;
+
+      var ground = this.bodies.rectangle(0 + width / 2, this.canvas.height - height / 2, width, height, {
+        isStatic: true
+      });
 
       // Add bodies to the world
       this.world.add(this.engine.world, [boxA, boxB, ground]);
@@ -46,8 +51,8 @@ var Game = function () {
     key: 'setGameDimensions',
     value: function setGameDimensions() {
       this.canvas.width = document.body.clientWidth;
-      // Use innerHeight or clientHeight, whichever is less (*more! overflow hidden means we coo)
-      this.canvas.height = window.innerHeight > document.body.clientHeight ? window.innerHeight : document.body.clientHeight;
+      // Use innerHeight or clientHeight, whichever is less
+      this.canvas.height = window.innerHeight < document.body.clientHeight ? window.innerHeight : document.body.clientHeight;
     }
   }]);
 
