@@ -8,6 +8,9 @@ class Hero {
   movement() {
     if (this.keys[38]) {
       console.log('forward');
+      this.body.force.x = 0.005;
+    } else {
+      this.body.force.x = 0;
     }
   }
   update(input) {
