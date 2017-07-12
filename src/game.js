@@ -19,29 +19,37 @@ class Game {
 
     this.setGameDimensions();
 
-    this.doStuff();
+    this.addFloor();
+    this.addJunk();
+    this.addHero();
 
     window.addEventListener('resize', this.setGameDimensions.bind(this), false);
   }
 
-  doStuff() {
+  addFloor() {
+    let width = this.canvas.width,
+      height = 10,
+      x = 0 + width / 2,
+      y = this.canvas.height - height / 2;
+
+    const ground = this.bodies.rectangle(x, y, width, height, {
+      isStatic: true
+    });
+
+    this.world.add(this.engine.world, [ground]);
+  }
+
+  addJunk() {
     let boxA = this.bodies.rectangle(400, 200, 80, 80);
     let boxB = this.bodies.rectangle(450, 50, 100, 100);
-    let width = this.canvas.width,
-      height = 10;
 
-    let ground = this.bodies.rectangle(
-      0 + width / 2,
-      this.canvas.height - height / 2,
-      width,
-      height,
-      {
-        isStatic: true
-      }
-    );
+    this.world.add(this.engine.world, [boxA, boxB]);
+  }
 
-    // Add bodies to the world
-    this.world.add(this.engine.world, [boxA, boxB, ground]);
+  addHero() {
+    const hero = this.bodies.circle(this.canvas.width / 2, 20, 20, 20);
+
+    this.world.add(this.engine.world, [hero]);
   }
 
   setGameDimensions() {

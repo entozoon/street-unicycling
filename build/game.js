@@ -27,25 +27,41 @@ var Game = function () {
 
     this.setGameDimensions();
 
-    this.doStuff();
+    this.addFloor();
+    this.addJunk();
+    this.addHero();
 
     window.addEventListener('resize', this.setGameDimensions.bind(this), false);
   }
 
   _createClass(Game, [{
-    key: 'doStuff',
-    value: function doStuff() {
-      var boxA = this.bodies.rectangle(400, 200, 80, 80);
-      var boxB = this.bodies.rectangle(450, 50, 100, 100);
+    key: 'addFloor',
+    value: function addFloor() {
       var width = this.canvas.width,
-          height = 10;
+          height = 10,
+          x = 0 + width / 2,
+          y = this.canvas.height - height / 2;
 
-      var ground = this.bodies.rectangle(0 + width / 2, this.canvas.height - height / 2, width, height, {
+      var ground = this.bodies.rectangle(x, y, width, height, {
         isStatic: true
       });
 
-      // Add bodies to the world
-      this.world.add(this.engine.world, [boxA, boxB, ground]);
+      this.world.add(this.engine.world, [ground]);
+    }
+  }, {
+    key: 'addJunk',
+    value: function addJunk() {
+      var boxA = this.bodies.rectangle(400, 200, 80, 80);
+      var boxB = this.bodies.rectangle(450, 50, 100, 100);
+
+      this.world.add(this.engine.world, [boxA, boxB]);
+    }
+  }, {
+    key: 'addHero',
+    value: function addHero() {
+      var hero = this.bodies.circle(this.canvas.width / 2, 20, 20, 20);
+
+      this.world.add(this.engine.world, [hero]);
     }
   }, {
     key: 'setGameDimensions',
