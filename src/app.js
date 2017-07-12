@@ -12,9 +12,18 @@ let render = Render.create({
   engine: engine
 });
 
-window.addEventListener('resize', resizeCanvas, false);
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const setGameDimensions = () => {
+  console.log('setGameDimensions');
+  canvas.width = document.body.clientWidth;
+  // Use the innerHeight or clientHeight, whichever is least
+  canvas.height =
+    window.innerHeight < document.body.clientHeight
+      ? window.innerHeight
+      : document.body.clientHeight;
+};
+
+let canvas = document.querySelector('canvas');
+window.addEventListener('resize', setGameDimensions, false);
 
 let boxA = Bodies.rectangle(400, 200, 80, 80);
 let boxB = Bodies.rectangle(450, 50, 100, 100);
@@ -28,3 +37,5 @@ Engine.run(engine);
 
 // Run renderer
 Render.run(render);
+
+setGameDimensions();
