@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -16,7 +16,15 @@ var Hero = function () {
 
     this.wheel = bodies.circle(canvas.width / 2, canvas.height / 2, this.size, {
       density: 0.002,
-      frictionAir: this.wheelFrictionAir
+      frictionAir: this.wheelFrictionAir,
+      // friction
+      // restitution
+
+      render: {
+        sprite: {
+          texture: '//cdn.rawgit.com/liabru/matter-js/2560a681/demo/img/ball.png'
+        }
+      }
     });
 
     this.man = bodies.rectangle(canvas.width / 2, canvas.height / 2 - 120, 50, 30, {
@@ -33,12 +41,12 @@ var Hero = function () {
   }
 
   _createClass(Hero, [{
-    key: "getBody",
+    key: 'getBody',
     value: function getBody() {
       return this.wheel;
     }
   }, {
-    key: "movement",
+    key: 'movement',
     value: function movement() {
       //console.log(this.keys);
       // Right
@@ -81,7 +89,7 @@ var Hero = function () {
       this.setManPosition();
     }
   }, {
-    key: "setManPosition",
+    key: 'setManPosition',
     value: function setManPosition() {
       this.angleBetweenWheelAndMan = Matter.Vector.angle(this.wheel.position, this.man.position);
       //this.man.angle = this.angleBetweenWheelAndMan;
@@ -92,7 +100,7 @@ var Hero = function () {
       //console.log(Math.abs(this.man.angle / (Math.PI * 2) * 360 + 90));
     }
   }, {
-    key: "update",
+    key: 'update',
     value: function update(input) {
       this.keys = input.keys;
       this.movement();
@@ -114,7 +122,9 @@ var engineClass = Matter.Engine,
   element: document.body,
   engine: engine,
   options: {
-    showAngleIndicator: true,
+    width: 1024,
+    height: 800,
+    showAngleIndicator: false,
     background: '#f00' // not working?
   }
 }),
@@ -134,6 +144,13 @@ var Game = function () {
     renderClass.run(render);
 
     this.setGameDimensions();
+
+    /*
+    renderClass.lookAt(render, {
+      min: { x: 0, y: 0 },
+      max: { x: 1440, y: 900 }
+    });
+    */
 
     this.addFloor();
     this.addJunk();

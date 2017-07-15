@@ -8,7 +8,15 @@ class Hero {
 
     this.wheel = bodies.circle(canvas.width / 2, canvas.height / 2, this.size, {
       density: 0.002,
-      frictionAir: this.wheelFrictionAir
+      frictionAir: this.wheelFrictionAir,
+      // friction
+      // restitution
+
+      render: {
+        sprite: {
+          texture: '//cdn.rawgit.com/liabru/matter-js/2560a681/demo/img/ball.png'
+        }
+      }
     });
 
     this.man = bodies.rectangle(canvas.width / 2, canvas.height / 2 - 120, 50, 30, {

@@ -9,11 +9,23 @@
             margin: 0;
             overflow: hidden;
           }
+          .wrapper {
+            display: flex;
+            background: #14151f;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: auto;
+            height: 100vh;
+          }
+          canvas {
+            max-width: 100%;
+            max-height: 100%;
+          }
         </style>
     </head>
 
-    <body>
-        <!-- Being super lazy and avoiding a webpack style build with imports/require.js -->
+    <body class="wrapper">
         <script src="./build/matter.js"></script>
         <script crossorigin="anonymous" src="./build/game.js"></script>
     </body>

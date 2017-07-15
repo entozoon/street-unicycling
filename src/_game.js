@@ -5,7 +5,9 @@ let engineClass = Matter.Engine,
     element: document.body,
     engine: engine,
     options: {
-      showAngleIndicator: true,
+      width: 1024,
+      height: 800,
+      showAngleIndicator: false,
       background: '#f00' // not working?
     }
   }),
@@ -23,6 +25,13 @@ class Game {
     renderClass.run(render);
 
     this.setGameDimensions();
+
+    /*
+    renderClass.lookAt(render, {
+      min: { x: 0, y: 0 },
+      max: { x: 1440, y: 900 }
+    });
+    */
 
     this.addFloor();
     this.addJunk();
