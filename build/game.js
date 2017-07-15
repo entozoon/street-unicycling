@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -9,53 +9,92 @@ var Hero = function () {
     _classCallCheck(this, Hero);
 
     this.size = 40;
-    this.acceleration = 1;
+    this.acceleration = 0.6;
+    this.forceFactor = 0.03;
+    this.wheelFrictionAir = 0.003;
+    this.jumpForce = 0.02;
+
     this.wheel = bodies.circle(canvas.width / 2, canvas.height / 2, this.size, {
-      density: 0.001,
-      frictionAir: 0.005
+      density: 0.002,
+      frictionAir: this.wheelFrictionAir
     });
 
-    world.add(engine.world, [this.wheel]);
+    this.man = bodies.rectangle(canvas.width / 2, canvas.height / 2 - 120, 50, 30, {
+      density: 0.001,
+      frictionAir: 0.04 // loads, to stay up
+    });
+
+    world.add(engine.world, [this.wheel, this.man]);
 
     world.add(engine.world, constraint.create({
-      pointA: { x: 300, y: 100 },
+      bodyA: this.man,
       bodyB: this.wheel
     }));
   }
 
   _createClass(Hero, [{
-    key: 'getBody',
+    key: "getBody",
     value: function getBody() {
       return this.wheel;
     }
   }, {
-    key: 'movement',
+    key: "movement",
     value: function movement() {
-      if (this.keys[38]) {
-        console.log('up');
-        //this.wheel.force.x = 0.005;
-        this.wheel.torque = this.acceleration;
-      }
-      if (this.keys[40]) {
-        console.log('down');
-        this.wheel.torque = -this.acceleration;
-      }
-      if (this.keys[37]) {
-        console.log('left');
-      }
+      //console.log(this.keys);
+      // Right
       if (this.keys[39]) {
-        console.log('right');
+        // Rotation AND force, or it's unplayable haha!
+        this.wheel.torque = this.acceleration;
+        this.wheel.force.x = this.acceleration * this.forceFactor;
+      }
+      // Left
+      if (this.keys[37]) {
+        this.wheel.torque = -this.acceleration;
+        this.wheel.force.x = -this.acceleration * this.forceFactor;
+      }
+      //if (this.keys[40]) { // down
+      //if (this.keys[38]) { // up
+      if (this.keys[32]) {
+        // space
+        //this.man.force.y = -this.jumpForce;
+        //this.wheel.force.y = -this.jumpForce;
+        //Matter.Body.setAngularVelocity(this.wheel,
+        //Matter.Body.applyForce(
+        //  this.man,
+        //  { x: this.wheel.x, y: this.wheel.y },
+        //  {
+        //    x: 0.0000000005,
+        //    y: 0.0000000005
+        //  }
+        //);
+        this.wheel.force = {
+          // this.man.force = {
+          x: Math.cos(this.angleBetweenWheelAndMan) * this.jumpForce,
+          y: Math.sin(this.angleBetweenWheelAndMan) * this.jumpForce
+        };
       }
 
       /*} else {
         this.body.force.x = 0;
       }*/
+
+      this.setManPosition();
     }
   }, {
-    key: 'update',
+    key: "setManPosition",
+    value: function setManPosition() {
+      this.angleBetweenWheelAndMan = Matter.Vector.angle(this.wheel.position, this.man.position);
+      //this.man.angle = this.angleBetweenWheelAndMan;
+      Matter.Body.setAngle(this.man, this.angleBetweenWheelAndMan); // more.. stronger
+
+      this.man.frictionAir = this.wheelFrictionAir;
+      this.man.frictionAir *= Math.abs(this.man.angle / (Math.PI * 2) * 360 + 90);
+      //console.log(Math.abs(this.man.angle / (Math.PI * 2) * 360 + 90));
+    }
+  }, {
+    key: "update",
     value: function update(input) {
       this.keys = input.keys;
-      console.log(this.keys);
       this.movement();
     }
   }]);
