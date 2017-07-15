@@ -18,7 +18,9 @@
     "opn-cli": "^3.1.0"
   },
   "scripts": {
-    "start": "npm-run-all --parallel js browser",
+    "start": "npm-run-all --parallel matterjs js browser",
+    "matterjsargh": "copy /y \"node_modules/matter-js/build/matter.js\" \"build/matter.js\"",
+    "matterjs": "copyfiles -f ./node_modules/matter-js/build/matter.js build",
     "js": "babel src --out-file build/game.js --presets=es2015 --watch",
     "browser": "browser-sync start --server --open local --files \"**/*.html, build/**\""
   }
