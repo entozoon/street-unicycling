@@ -3,10 +3,15 @@ let engineClass = Matter.Engine,
   renderClass = Matter.Render,
   render = renderClass.create({
     element: document.body,
-    engine: engine
+    engine: engine,
+    options: {
+      showAngleIndicator: true,
+      background: '#f00' // not working?
+    }
   }),
   world = Matter.World,
   bodies = Matter.Bodies,
+  constraint = Matter.Constraint,
   canvas = document.querySelector('canvas');
 
 class Game {
@@ -50,8 +55,6 @@ class Game {
 
   addHero() {
     let hero = new Hero();
-
-    world.add(engine.world, [hero.body]);
 
     return hero;
   }
