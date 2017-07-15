@@ -14,7 +14,9 @@ class Hero {
 
       render: {
         sprite: {
-          texture: '//cdn.rawgit.com/liabru/matter-js/2560a681/demo/img/ball.png'
+          texture: 'build/images/wheel.png',
+          xScale: 2,
+          yScale: 2
         }
       }
     });
