@@ -66,27 +66,11 @@ var Hero = function () {
       //if (this.keys[38]) { // up
       if (this.keys[32]) {
         // space
-        //this.man.force.y = -this.jumpForce;
-        //this.wheel.force.y = -this.jumpForce;
-        //Matter.Body.setAngularVelocity(this.wheel,
-        //Matter.Body.applyForce(
-        //  this.man,
-        //  { x: this.wheel.x, y: this.wheel.y },
-        //  {
-        //    x: 0.0000000005,
-        //    y: 0.0000000005
-        //  }
-        //);
         this.wheel.force = {
-          // this.man.force = {
           x: Math.cos(this.angleBetweenWheelAndMan) * this.jumpForce,
           y: Math.sin(this.angleBetweenWheelAndMan) * this.jumpForce
         };
       }
-
-      /*} else {
-        this.body.force.x = 0;
-      }*/
 
       this.setManPosition();
     }
@@ -128,7 +112,6 @@ var engineClass = Matter.Engine,
     height: 800,
     showAngleIndicator: false,
     wireframes: false // IMPORTANT AS HECK
-    //background: '#445'
   }
 }),
     world = Matter.World,

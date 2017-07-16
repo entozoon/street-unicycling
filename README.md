@@ -6,8 +6,9 @@ Ultimately, I think it's too hard to play. Using a controller would be easier bu
 
 ## [Play now!](https://entozoon.github.io/street-unicycling)
 
+Left/right arrow keys and space to jump.
 
-## Development
+### Development
 
 	npm i
 	npm start
