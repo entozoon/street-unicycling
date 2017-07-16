@@ -8,6 +8,7 @@ let engineClass = Matter.Engine,
       width: 1024,
       height: 800,
       showAngleIndicator: false,
+      wireframes: false, // IMPORTANT AS HECK
       background: '#f00' // not working?
     }
   }),
