@@ -8,8 +8,8 @@ let engineClass = Matter.Engine,
       width: 1024,
       height: 800,
       showAngleIndicator: false,
-      wireframes: false, // IMPORTANT AS HECK
-      background: '#f00' // not working?
+      wireframes: false // IMPORTANT AS HECK
+      //background: '#445'
     }
   }),
   world = Matter.World,
@@ -53,7 +53,13 @@ class Game {
       isStatic: true
     });
 
-    world.add(engine.world, [ground]);
+    const ramp = bodies.rectangle(x + 200, y - 50, width, height, {
+      isStatic: true
+    });
+
+    Matter.Body.rotate(ramp, Math.PI * 2 / 360 * -30);
+
+    world.add(engine.world, [ground, ramp]);
   }
 
   addJunk() {

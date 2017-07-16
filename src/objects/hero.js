@@ -14,9 +14,9 @@ class Hero {
 
       render: {
         sprite: {
-          texture: 'build/images/wheel.png',
-          xScale: 2,
-          yScale: 2
+          texture: './build/images/wheel.png',
+          xScale: 0.5,
+          yScale: 0.5
         }
       }
     });
