@@ -9,7 +9,6 @@ let engineClass = Matter.Engine,
       height: 800,
       showAngleIndicator: false,
       wireframes: false // IMPORTANT AS HECK
-      //background: '#445'
     }
   }),
   world = Matter.World,

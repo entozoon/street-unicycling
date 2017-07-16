@@ -17,7 +17,7 @@ var Hero = function () {
     this.wheel = bodies.circle(canvas.width / 2, canvas.height / 2, this.size, {
       density: 0.002,
       frictionAir: this.wheelFrictionAir,
-      // friction
+      friction: 2000, // no effect
       // restitution
 
       render: {
